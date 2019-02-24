@@ -1,0 +1,25 @@
+{
+  "name": "bookstore",
+  "version": "1.0.0",
+  "description": "simple bookstore api",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongoose": "^5.4.15",
+    "body-parser": "*"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maby0801/dt162g_webserver.git"
+  },
+  "author": "Mattias Bygdeson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maby0801/dt162g_webserver/issues"
+  },
+  "homepage": "https://github.com/maby0801/dt162g_webserver#readme"
+}
