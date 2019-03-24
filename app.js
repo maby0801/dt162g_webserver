@@ -109,6 +109,13 @@ app.delete("/api/tasks/delete/:id", function(req, res){
     });
 });
 
+// Initialize the app.
+var server = app.listen(process.env.PORT || 8080, function () {
+    var port = server.address().port;
+    console.log("App now running on port", port);
+});
+
+/*
 // TCP/IP port
 var port = 8080;
 
@@ -116,3 +123,4 @@ var port = 8080;
 app.listen(port, function(){
     console.log("Server is running at port " + port);
 });
+*/
