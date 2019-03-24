@@ -8,10 +8,9 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var tasksSchema = new Schema({
-    //taskId: String,
-    taskBody: String,
-    taskDeadline: String,
-    taskComplete: Boolean
+    _id: String,
+    title: String,
+    completed: Boolean
 });
 
 module.exports = mongoose.model("Tasks", tasksSchema);

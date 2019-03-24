@@ -4,9 +4,10 @@
   "description": "simple bookstore api",
   "main": "app.js",
   "dependencies": {
+    "body-parser": "*",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
-    "mongoose": "^5.4.15",
-    "body-parser": "*"
+    "mongoose": "^5.4.15"
   },
   "devDependencies": {},
   "scripts": {

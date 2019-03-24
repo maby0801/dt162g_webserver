@@ -8,6 +8,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var mongoose = require('mongoose');
+var cors = require('cors');
 
 // Connect to database (REMOTE)
 mongoose.connect("mongodb://mattias:louisianabob04@ds249623.mlab.com:49623/todolistdb", { useNewUrlParser: true });
@@ -15,14 +16,16 @@ mongoose.connect("mongodb://mattias:louisianabob04@ds249623.mlab.com:49623/todol
 // Read schema
 var Tasks = require("./models/tasks.js");
 
-// Create instance of express
+// Create instance of express and cors
 var app = express();
+app.use(cors());
 
 // Middleware (make web service accessible from other domains)
-app.all('/*', function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "X-Requested-With");
-	res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
+app.all('/*', function(req, res, next) {    
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Accept');
+    
 	next();
 });
 
@@ -64,10 +67,9 @@ app.post("/api/tasks/add", function(req, res){
     var task = new Tasks();
 
     // Create new object
-    // task.taskId = req.body.taskId;
-    task.taskBody = req.body.taskBody;
-    task.taskDeadline = req.body.taskDeadline;
-    task.taskComplete = req.body.taskComplete;
+    task._id = req.body._id;
+    task.title = req.body.title;
+    task.completed = req.body.completed;
 
     // Save to database
     task.save(function(err) {
@@ -85,16 +87,14 @@ app.put("/api/tasks/update/:id", function(req, res){
     var ID = req.params.id;
 
     // New values
-    var taskBody = req.body.taskBody;
-    var taskDeadline = req.body.taskDeadline;
+    var title = req.body.title;
+    var completed = req.body.completed;
+    //var taskDeadline = req.body.taskDeadline;
 
-    Tasks.updateOne( { _id: ID }, { $set: {taskBody: taskBody, taskDeadline: taskDeadline}}, function(err, Tasks){
+    Tasks.updateOne( { _id: ID }, { $set: {title: title, completed: completed}}, function(err, Tasks){
         if(err) {
             res.send(err);
         }
-
-        // res.redirect("/");
-        res.json({ message: "Task updated with id: " + ID });
     })
 });
 
@@ -106,13 +106,11 @@ app.delete("/api/tasks/delete/:id", function(req, res){
         if(err) {
             res.send(err);
         }
-
-        res.json({ message: "Task removed, id: " + deleteID });
     });
 });
 
 // TCP/IP port
-var port = 3000;
+var port = 8080;
 
 // Start server
 app.listen(port, function(){
